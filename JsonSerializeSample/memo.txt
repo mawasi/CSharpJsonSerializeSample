@@ -1,0 +1,10 @@
+﻿
+C#でJSONを扱うときはSystem.Text.Jsonを使う
+https://qiita.com/hkiribayashi/items/79f8336d9098218d87e3
+
+.NET 内で JSON のシリアル化と逆シリアル化 (マーシャリングとマーシャリングの解除) を行う方法
+https://docs.microsoft.com/ja-jp/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+
+System.Text.Json で JSON ドキュメント、Utf8JsonReader、Utf8JsonWriter を使用する方法
+https://docs.microsoft.com/ja-jp/dotnet/standard/serialization/system-text-json-use-dom-utf8jsonreader-utf8jsonwriter?pivots=dotnet-5-0
+
