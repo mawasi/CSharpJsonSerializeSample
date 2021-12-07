@@ -28,11 +28,12 @@ namespace JsonSerializeSample
 			shelf.BookList.Add(book);
 
 			string path = Directory.GetParent(Assembly.GetEntryAssembly().Location).FullName + @"\BookShelf.json";
-//			Serializer.Serialize(shelf, path);
+			Serializer.Serialize(shelf, path);
+//			var readshelf = Serializer.Deserialize(path);
 
 			path = Directory.GetParent(Assembly.GetEntryAssembly().Location).FullName + @"\BookShelf2.json";
-//			Serializer.Serialize2(shelf, path);
-			var readshelf = Serializer.Deserialize2(path);
+			Serializer.Serialize2(shelf, path);
+//			var readshelf2 = Serializer.Deserialize2(path);
 
 		}
 	}

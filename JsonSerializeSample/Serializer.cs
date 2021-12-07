@@ -34,7 +34,8 @@ namespace JsonSerializeSample
 			};
 			string text = JsonSerializer.Serialize(data, option);
 
-			File.WriteAllText(path, text);
+			// UTF8Encoding(true)を指定することでBOM付きUTF8テキストとして保存
+			File.WriteAllText(path, text, new UTF8Encoding(true));
 		}
 
 		/// <summary>
@@ -46,7 +47,7 @@ namespace JsonSerializeSample
 			string text = string.Empty;
 			try
 			{
-				text = File.ReadAllText(path);
+				text = File.ReadAllText(path, new UTF8Encoding(true));
 			}
 			catch (FileNotFoundException ex)
 			{
@@ -91,7 +92,7 @@ namespace JsonSerializeSample
 			writer.Flush();
 
 			string json = Encoding.UTF8.GetString(stream.ToArray());
-			File.WriteAllText(path, json);
+			File.WriteAllText(path, json, new UTF8Encoding(true));
 		}
 
 
@@ -107,11 +108,22 @@ namespace JsonSerializeSample
 				
 	//		};
 
+			// BOM付きの場合、BOM部分飛ばす用
+			ReadOnlySpan<byte> Utf8Bom = new byte[] { 0xEF, 0xBB, 0xBF };
+
 			var shelf = new BookShelf();
 			BookShelf.BookData book = null;
 			List<string> values = new List<string>();
 			bool isInArray = false;
+
+
 			ReadOnlySpan<byte> jsonReadOnlySpan = File.ReadAllBytes(path);
+
+			// BOM分読み飛ばす
+			if(jsonReadOnlySpan.StartsWith(Utf8Bom)){
+				jsonReadOnlySpan = jsonReadOnlySpan.Slice(Utf8Bom.Length);
+			}
+
 			var reader = new Utf8JsonReader(jsonReadOnlySpan);
 			while(reader.Read()){
 				JsonTokenType tokenType = reader.TokenType;
